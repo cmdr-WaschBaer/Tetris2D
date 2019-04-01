@@ -7,20 +7,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-import java.awt.event.KeyListener;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-
-import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
 
 
@@ -62,10 +57,6 @@ public class Controller implements Initializable {
     @FXML
     protected GridPane figurine;
 
-    private double newY = 0;
-    private double newX = 0;
-    String[][] array = new String[21][10];
-    Rectangle rect = new Rectangle(33, 33);
 
     int[][] numarray = {{0, 1, 0}, {1, 1, 1}, {0, 0, 0}};
     Rectangle[][] figArray = new Rectangle[3][3];
@@ -74,6 +65,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         for (int y = 0; y < numarray.length; y++) {
             for (int x = 0; x < numarray[y].length; x++) {
                 if (numarray[y][x] == 1) {
@@ -90,10 +83,69 @@ public class Controller implements Initializable {
             }
         }
 
-        keyPressed();
+        registerKeyboardHandler(gamePane);
+
     }
 
-    public void keyPressed() {
+    private void registerKeyboardHandler(Pane pane) {
+        pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                boolean consumed = false;
+
+                switch (keyEvent.getCode()) {
+                    case DOWN:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("DOWN");
+                        consumed = true;
+                        break;
+                    case LEFT:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("LEFT");
+                        consumed = true;
+                        break;
+                    case RIGHT:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("RIGHT");
+                        consumed = true;
+                        break;
+                    case UP:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("UP");
+                        consumed = true;
+                        break;
+
+                    case Q:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("Q");
+                        consumed = true;
+                        break;
+
+                    case E:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("E");
+                        consumed = true;
+                        break;
+
+                    case ENTER:
+                        System.out.println("Key Pressed: " + keyEvent.getCode());
+                        evenT("ENTER");
+                        consumed = true;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (consumed) {
+                    keyEvent.consume();
+                }
+            }
+        });
+        pane.setFocusTraversable(true);
+    }
+
+   /* public void keyPressed() {
         boolean input = true;
         anchorPane.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -115,10 +167,24 @@ public class Controller implements Initializable {
                 }
             }
         });
-    }
+    }*/
 
 
-    public void evenT(String event){
+    private void evenT(String event){
+        int neuZeile=posY;
+        int neuSpalte=posX;
+        int maxSpalte = figArray[0].length-1;
+        int maxZeile = figArray.length-1;
+
+        Rectangle [][] buffer=new Rectangle[figArray.length][figArray.length];
+
+        for (int y = 0; y < figArray.length; y++) {
+            for (int x = 0; x < figArray[y].length; x++) {
+                buffer[y][x] = figArray[y][x];
+            }
+        }
+
+
         switch(event){
             case "DOWN":
                 for (int y = 0; y < figArray.length; y++) {
@@ -155,12 +221,38 @@ public class Controller implements Initializable {
                 }
                 posX++;
                 break;
+            case "ENTER":
+                break;
+
+            case "Q":
+                for (int y = 0; y < figArray.length; y++) {
+                    for (int x = 0; x < figArray[y].length; x++) {
+                        neuSpalte=y;
+                        neuZeile=maxSpalte -x;
+                        gamePane.getChildren().remove(figArray[y][x]);
+                        GridPane.setRowIndex(figArray[neuZeile][neuSpalte], posY + y);
+                        GridPane.setColumnIndex(figArray[neuZeile][neuSpalte], posX + x);
+                        gamePane.getChildren().addAll(figArray[neuSpalte][neuZeile]);
+                        figArray[y][x] = buffer[neuSpalte][neuZeile];
+                    }
+                }
+                break;
+
+            case "E":
+                for (int y = 0; y < figArray.length; y++) {
+                    for (int x = 0; x < figArray[y].length; x++) {
+                        neuSpalte=y;
+                        neuZeile=maxSpalte -x;
+                        gamePane.getChildren().remove(figArray[y][x]);
+                    }
+                }
+                break;
 
         }
     }
 
     @FXML
-    protected void buttonAction(ActionEvent e) {
+    private void buttonAction(ActionEvent e) {
 
         if (e.getSource() == down) {
             evenT("DOWN");
@@ -177,11 +269,6 @@ public class Controller implements Initializable {
         if (e.getSource() == right) {
             evenT("RIGHT");
         }
-    }
-
-    @FXML
-    protected void handleKeyPressed(KeyEvent ke){
-        System.out.println("Key Pressed: " + ke.getCode());
     }
 
     protected Node getNodeFromGridPane(GridPane gridPane, int col, int row) {

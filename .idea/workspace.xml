@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="updated keyhandler and move loops">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tetris2D/sample/Controller$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tetris2D/sample/Controller$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tetris2D/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tetris2D/sample/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
+    </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,8 +59,7 @@
     <breakpoint_rules converted="true" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="JavaFxApplication" />
@@ -71,6 +76,11 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Tetris2D.iml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/LSpielfigur.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="493">
@@ -81,12 +91,12 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
               <caret line="14" column="306" selection-start-line="14" selection-start-column="306" selection-end-line="14" selection-end-column="306" />
             </state>
           </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -110,13 +120,47 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="102" selection-start-line="102" selection-end-line="102" />
+            <state relative-caret-position="-877">
+              <caret line="73" column="31" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#evenT#0;class#Controller#0" />
+                <element signature="method#registerKeyboardHandler#0;class#Controller#0" />
                 <element signature="method#buttonAction#0;class#Controller#0" />
                 <element signature="method#getNodeFromGridPane#0;class#Controller#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sample/Spielfeld.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="83" column="5" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#Spielfeld#0" />
+                <element signature="docComment;method#Spielfeld#0;class#Spielfeld#0" />
+                <element signature="method#Spielfeld#0;class#Spielfeld#0" />
+                <element signature="docComment;method#initializeField#0;class#Spielfeld#0" />
+                <element signature="method#initializeField#0;class#Spielfeld#0" />
+                <element signature="docComment;method#setzePixelwertAn#0;class#Spielfeld#0" />
+                <element signature="method#setzePixelwertAn#0;class#Spielfeld#0" />
+                <element signature="docComment;method#zeileIstGueltig#0;class#Spielfeld#0" />
+                <element signature="docComment;method#spalteIstGueltig#0;class#Spielfeld#0" />
+                <element signature="method#spalteIstGueltig#0;class#Spielfeld#0" />
+                <element signature="docComment;method#pixelWertKollidiertAn#0;class#Spielfeld#0" />
+                <element signature="docComment;method#zeileIstVoll#0;class#Spielfeld#0" />
+                <element signature="method#zeileIstVoll#0;class#Spielfeld#0" />
+                <element signature="docComment;method#loescheZeile#0;class#Spielfeld#0" />
+                <element signature="method#loescheZeile#0;class#Spielfeld#0" />
+                <element signature="docComment;method#kopiereZeile#0;class#Spielfeld#0" />
+                <element signature="method#kopiereZeile#0;class#Spielfeld#0" />
+                <element signature="docComment;method#kopiereAlleZeilenNachUntenAb#0;class#Spielfeld#0" />
+                <element signature="method#kopiereAlleZeilenNachUntenAb#0;class#Spielfeld#0" />
+                <element signature="docComment;method#obersteZeileMitLeerzeichenFuellen#0;class#Spielfeld#0" />
+                <element signature="method#obersteZeileMitLeerzeichenFuellen#0;class#Spielfeld#0" />
+                <element signature="docComment;method#loescheAlleVolleZeilen#0;class#Spielfeld#0" />
               </folding>
             </state>
           </provider>
@@ -134,8 +178,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="15" selection-start-column="15" selection-end-column="15" />
+            <state relative-caret-position="119">
+              <caret line="15" column="6" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -167,6 +211,15 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="me" />
+      </list>
+    </option>
+    <option name="ROOT_SYNC" value="SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -195,12 +248,13 @@
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds">
-    <option name="x" value="567" />
-    <option name="y" value="16" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="224" />
+    <option name="y" value="-15" />
     <option name="width" value="974" />
     <option name="height" value="1087" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
@@ -209,19 +263,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Tetris2D" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tetris2D" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tetris2D" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tetris2D" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Tetris2D" type="b2602c69:ProjectViewProjectNode" />
@@ -234,10 +281,16 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="sample" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Tetris2D" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -248,11 +301,12 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="OverrideImplement.combined" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553855928015" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PATH_TO_FX$" />
+    <property name="last_opened_file_path" value="C:/Program Files/SceneBuilder/SceneBuilder.exe" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="SDKs" />
@@ -260,7 +314,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -397,16 +451,19 @@
       <workItem from="1553859004508" duration="520000" />
       <workItem from="1553859537880" duration="8716000" />
       <workItem from="1553913208112" duration="527000" />
+      <workItem from="1553913759082" duration="3203000" />
+      <workItem from="1553960791091" duration="7678000" />
+      <workItem from="1554081768572" duration="260000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43257000" />
+    <option name="totallyTimeSpent" value="54398000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="567" y="16" width="974" height="1087" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.032822758" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.21695095" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -416,8 +473,8 @@
       <window_info anchor="bottom" id="Duplicate detector" order="0" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.32914045" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.39869988" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.32870865" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.39807898" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" />
@@ -427,7 +484,7 @@
       <window_info anchor="bottom" id="Changes" order="11" />
       <window_info anchor="bottom" id="Profiler" order="12" />
       <window_info anchor="bottom" id="Event Log" order="13" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.3271028" />
+      <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.32657418" />
       <window_info anchor="bottom" id="Docker" order="15" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="16" />
       <window_info anchor="bottom" id="Terminal" order="17" />
@@ -488,6 +545,8 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <MESSAGE value="updated keyhandler and move loops" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated keyhandler and move loops" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -540,39 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Spielfeld.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="194" selection-start-line="194" selection-end-line="194" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#Spielfeld#0" />
-            <element signature="docComment;method#Spielfeld#0;class#Spielfeld#0" />
-            <element signature="method#Spielfeld#0;class#Spielfeld#0" />
-            <element signature="docComment;method#initializeField#0;class#Spielfeld#0" />
-            <element signature="method#initializeField#0;class#Spielfeld#0" />
-            <element signature="docComment;method#setzePixelwertAn#0;class#Spielfeld#0" />
-            <element signature="method#setzePixelwertAn#0;class#Spielfeld#0" />
-            <element signature="docComment;method#zeileIstGueltig#0;class#Spielfeld#0" />
-            <element signature="docComment;method#spalteIstGueltig#0;class#Spielfeld#0" />
-            <element signature="method#spalteIstGueltig#0;class#Spielfeld#0" />
-            <element signature="docComment;method#pixelWertKollidiertAn#0;class#Spielfeld#0" />
-            <element signature="method#pixelWertKollidiertAn#0;class#Spielfeld#0" />
-            <element signature="docComment;method#zeileIstVoll#0;class#Spielfeld#0" />
-            <element signature="method#zeileIstVoll#0;class#Spielfeld#0" />
-            <element signature="docComment;method#loescheZeile#0;class#Spielfeld#0" />
-            <element signature="method#loescheZeile#0;class#Spielfeld#0" />
-            <element signature="docComment;method#kopiereZeile#0;class#Spielfeld#0" />
-            <element signature="method#kopiereZeile#0;class#Spielfeld#0" />
-            <element signature="docComment;method#kopiereAlleZeilenNachUntenAb#0;class#Spielfeld#0" />
-            <element signature="method#kopiereAlleZeilenNachUntenAb#0;class#Spielfeld#0" />
-            <element signature="docComment;method#obersteZeileMitLeerzeichenFuellen#0;class#Spielfeld#0" />
-            <element signature="method#obersteZeileMitLeerzeichenFuellen#0;class#Spielfeld#0" />
-            <element signature="docComment;method#loescheAlleVolleZeilen#0;class#Spielfeld#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PATH_TO_FX$/javafx.graphics.jar!/javafx/scene/layout/GridPane.class" />
     <entry file="file://$PROJECT_DIR$/src/sample/Spielfigur.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -596,6 +622,9 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Tetris2D.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/LSpielfigur.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -604,12 +633,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="306" selection-start-line="14" selection-start-column="306" selection-end-line="14" selection-end-column="306" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/ISpielfigur.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -625,6 +654,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Spielfeld.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="83" column="5" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#Spielfeld#0" />
+            <element signature="docComment;method#Spielfeld#0;class#Spielfeld#0" />
+            <element signature="method#Spielfeld#0;class#Spielfeld#0" />
+            <element signature="docComment;method#initializeField#0;class#Spielfeld#0" />
+            <element signature="method#initializeField#0;class#Spielfeld#0" />
+            <element signature="docComment;method#setzePixelwertAn#0;class#Spielfeld#0" />
+            <element signature="method#setzePixelwertAn#0;class#Spielfeld#0" />
+            <element signature="docComment;method#zeileIstGueltig#0;class#Spielfeld#0" />
+            <element signature="docComment;method#spalteIstGueltig#0;class#Spielfeld#0" />
+            <element signature="method#spalteIstGueltig#0;class#Spielfeld#0" />
+            <element signature="docComment;method#pixelWertKollidiertAn#0;class#Spielfeld#0" />
+            <element signature="docComment;method#zeileIstVoll#0;class#Spielfeld#0" />
+            <element signature="method#zeileIstVoll#0;class#Spielfeld#0" />
+            <element signature="docComment;method#loescheZeile#0;class#Spielfeld#0" />
+            <element signature="method#loescheZeile#0;class#Spielfeld#0" />
+            <element signature="docComment;method#kopiereZeile#0;class#Spielfeld#0" />
+            <element signature="method#kopiereZeile#0;class#Spielfeld#0" />
+            <element signature="docComment;method#kopiereAlleZeilenNachUntenAb#0;class#Spielfeld#0" />
+            <element signature="method#kopiereAlleZeilenNachUntenAb#0;class#Spielfeld#0" />
+            <element signature="docComment;method#obersteZeileMitLeerzeichenFuellen#0;class#Spielfeld#0" />
+            <element signature="method#obersteZeileMitLeerzeichenFuellen#0;class#Spielfeld#0" />
+            <element signature="docComment;method#loescheAlleVolleZeilen#0;class#Spielfeld#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Tastatur.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -634,8 +695,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="15" selection-start-column="15" selection-end-column="15" />
+        <state relative-caret-position="119">
+          <caret line="15" column="6" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="60" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -644,11 +705,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        <state relative-caret-position="-877">
+          <caret line="73" column="31" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#evenT#0;class#Controller#0" />
+            <element signature="method#registerKeyboardHandler#0;class#Controller#0" />
             <element signature="method#buttonAction#0;class#Controller#0" />
             <element signature="method#getNodeFromGridPane#0;class#Controller#0" />
           </folding>
