@@ -289,15 +289,19 @@ public class Controller implements Initializable {
                 if(figArray[y][x]!=null) {
                     if (wallCollision(newX + x)) {
                         collision = true;
-                    }else if(endOfField(newY+y)){
-                            newFig = true;
-                            collision = true;
-                    }else if (objectCollision(buffer, newY + y, newX + x)) {
+                        break;
+                    } else if(objectCollisionHor(buffer,newX +x,posY+y)){
+                        collision = true;
+                        break;
+                    } else if(endOfField(newY+y)){
+                        newFig = true;
+                        collision = true;
+                        break;
+                    } else if (objectCollisionVer(buffer,posX+x, newY + y)) {
                         newFig = true;
                         collision = true;
                         break;
                     }
-                    else collision = false;
                 }
             }
         }
@@ -305,24 +309,32 @@ public class Controller implements Initializable {
     }
 
     protected boolean wallCollision(int _newCol){
-        if(_newCol>maxC || _newCol<=0){
+        if(_newCol>maxC || _newCol<0){
             return true;
         }
         return false;
     }
 
-    protected boolean objectCollision(Node[][] buffer,int _newRow, int _newCol){
+    protected boolean objectCollisionHor(Node[][] buffer,int _newCol,int _newRow){
             if(buffer[_newRow][_newCol] != null){
                 return true;
             }
             else return false;
     }
 
-    protected  boolean endOfField(int _newRow){
-        if(_newRow<=maxR){
-            return false;
+    protected boolean objectCollisionVer(Node[][] buffer,int _newCol ,int _newRow){
+        if(buffer[_newRow][_newCol] != null){
+            return true;
         }
-        else return true;
+        else return false;
+    }
+
+
+    protected  boolean endOfField(int _newRow){
+        if(_newRow>maxR){
+            return true;
+        }
+        else return false;
     }
 
     protected void createNewFigurine(){
