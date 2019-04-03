@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -38,37 +38,52 @@ public class Controller implements Initializable {
     @FXML
     protected GridPane gamePane;
 
+    final int[][] TSpielfigur = {{0,1,0}, {1,1,1}, {0,0,0},{0,0,0}};
+    final int[][] ISpielfigur = {{0,1,0}, {0,1,0}, {0,1,0},{0,1,0}};
+    final int[][] OSpielfigur = {{1,1,0}, {1,1,0}, {0,0,0},{0,0,0}};
+    final int[][] ZSpielfigur = {{1,1,0}, {0,1,1}, {0,0,0},{0,0,0}};
+    final int[][] SSpielfigur = {{0,1,1}, {1,1,0}, {0,0,0},{0,0,0}};
+    final int[][] LSpielfigur = {{1,0,0}, {1,0,0}, {1,1,0},{0,0,0}};
+    final int[][] JSpielfigur = {{0,0,1}, {0,0,1}, {0,1,1},{0,0,0}};
+
+    boolean newFig = false;
 
 
-    int[][] numarray = {{0, 1, 0}, {1, 1, 1}, {0, 0, 0}};
-    Rectangle[][] figArray = new Rectangle[3][3];
-    int posY = 0;
-    int posX = 7;
-    List<NodeParent> list = new ArrayList<>();
+    protected int posY = 0;
+    protected int posX = 7;
+
+    protected int[][]field=new int[21][10];
+    protected Node[][] playfield = new Node[21][10];
 
     final static int maxR = 20;
     final static int maxC = 9;
+    protected int[][]figur = new int[4][3];
+    protected Rectangle[][] figArray = new Rectangle[4][3];
+
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        figur = randomizedFig();
 
-        for (int y = 0; y < numarray.length; y++) {
-            for (int x = 0; x < numarray[y].length; x++) {
-                if (numarray[y][x] == 1) {
+        for (int y = 0; y < figur.length; y++) {
+            for (int x = 0; x < figur[y].length; x++) {
+                if (figur[y][x] == 1) {
                     figArray[y][x] = new Rectangle(33, 33, Color.BLACK);
                 }
             }
         }
 
-        for (int y = 0; y < figArray.length; y++) {
-            for (int x = 0; x < figArray[y].length; x++) {
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 3; x++) {
                 if(figArray[y][x]!=null) {
-                    GridPane.setRowIndex(figArray[y][x], posY + y);
-                    GridPane.setColumnIndex(figArray[y][x], posX + x);
-                    gamePane.getChildren().addAll(figArray[y][x]);
-                    list.add(new NodeParent(y, x, figArray[y][x]));
+                    Rectangle rectangle = new Rectangle(33,33,Color.BLACK);
+                    GridPane.setRowIndex(rectangle, posY + y);
+                    GridPane.setColumnIndex(rectangle, posX + x);
+                    gamePane.getChildren().addAll(rectangle);
+                    playfield[posY+y][posX+x] = rectangle;
                 }
             }
         }
@@ -81,6 +96,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(KeyEvent keyEvent) {
                 boolean consumed = false;
+                newFig = false;
 
                 switch (keyEvent.getCode()) {
                     case DOWN:
@@ -125,6 +141,15 @@ public class Controller implements Initializable {
                     default:
                         break;
                 }
+/*
+                System.out.println("--------------------------------");
+                for(int y=0;y<field.length;y++){
+                    System.out.println();
+                    for(int x=0;x<field[0].length;x++){
+                        System.out.print(field[y][x]);
+                    }
+                }
+*/
 
                 if (consumed) {
                     keyEvent.consume();
@@ -134,124 +159,48 @@ public class Controller implements Initializable {
         pane.setFocusTraversable(true);
     }
 
-    private void evenT(String event){
-        int neuZeile=posY;
-        int neuSpalte=posX;
-        int maxSpalte = figArray[0].length-1;
-        int maxZeile = figArray.length-1;
+    private boolean evenT(String event){
 
-        int nodeIndex = 0;
-        boolean allowed = true;
-
-
+        boolean endOfField = false;
 
         switch(event){
             case "DOWN":
-                for (int y = 0; y < figArray.length; y++) {
-                    for (int x = 0; x < figArray[y].length; x++) {
-                        if(figArray[y][x]!=null) {
-                            if (posY+y+1 >maxR) {
-                                allowed = false;
-                            }
-                        }
-                    }
-
-                }
-                if(allowed) {
-                        moveVer(+ 1);
-                    for (int y = 0; y < figArray.length; y++) {
-                        for (int x = 0; x < figArray[y].length; x++) {
-                            if (figArray[y][x] != null) {
-                                nodeIndex = findNode(posY + y, posY + x);
-                                if (nodeIndex != -1) {
-                                    list.get(nodeIndex).updateNode(posY+y+1,posX);
-                                }
-                            }
-                        }
-                    }
+                if(!checkForCollision(posY+1,posX)){
+                    changePosition(posY,posX,posY+1,posX);
                     posY++;
+                }
+                if (newFig) {
+                    createNewFigurine();
                 }
                 break;
 
             case"UP":
-                for (int y = 0; y < figArray.length; y++) {
-                    for (int x = 0; x < figArray[y].length; x++) {
-                        if(figArray[y][x]!=null) {
-                            if (posY+y-1 <0) {
-                                allowed = false;
-                            }
-                        }
-                    }
-
-                }
-                if(allowed) {
-                    moveVer(-1);
-                    for (int y = 0; y < figArray.length; y++) {
-                        for (int x = 0; x < figArray[y].length; x++) {
-                            if (figArray[y][x] != null) {
-                                nodeIndex = findNode(posY + y, posY + x);
-                                if (nodeIndex != -1) {
-                                    list.get(nodeIndex).updateNode(posY+y-1,posX);
-                                }
-                            }
-                        }
-                    }
+                if(!checkForCollision(posY-1,posX)){
+                    changePosition(posY,posX,posY-1,posX);
                     posY--;
                 }
-
+                if (newFig) {
+                    createNewFigurine();
+                }
                 break;
 
             case"LEFT":
-                for (int y = 0; y < figArray.length; y++) {
-                    for (int x = 0; x < figArray[y].length; x++) {
-                        if(figArray[y][x]!=null) {
-                            if (posX + x - 1<0) {
-                                allowed = false;
-                            }
-                        }
-                    }
-
-                }
-                if(allowed) {
-                    moveHor(-1);
-                    for (int y = 0; y < figArray.length; y++) {
-                        for (int x = 0; x < figArray[y].length; x++) {
-                            if (figArray[y][x] != null) {
-                                nodeIndex = findNode(posY + y, posY + x);
-                                if (nodeIndex != -1) {
-                                    list.get(nodeIndex).updateNode(posY+y,posX+x-1);
-                                }
-                            }
-                        }
-                    }
+                if(!checkForCollision(posY,posX-1)){
+                    changePosition(posY,posX,posY,posX-1);
                     posX--;
+                }
+                if (newFig) {
+                    createNewFigurine();
                 }
                 break;
 
             case"RIGHT":
-                for (int y = 0; y < figArray.length; y++) {
-                    for (int x = 0; x < figArray[y].length; x++) {
-                        if(figArray[y][x]!=null) {
-                            if (posX+x+1>maxC) {
-                                allowed = false;
-                            }
-                        }
-                    }
-
-                }
-                if(allowed) {
-                    moveHor(+1);
-                    for (int y = 0; y < figArray.length; y++) {
-                        for (int x = 0; x < figArray[y].length; x++) {
-                            if (figArray[y][x] != null) {
-                                nodeIndex = findNode(posY + y, posY + x);
-                                if (nodeIndex != -1) {
-                                    list.get(nodeIndex).updateNode(posY+y,posX+x+1);
-                                }
-                            }
-                        }
-                    }
+                if(!checkForCollision(posY,posX+1)){
+                    changePosition(posY,posX,posY,posX+1);
                     posX++;
+                }
+                if (newFig) {
+                    createNewFigurine();
                 }
                 break;
 
@@ -265,27 +214,36 @@ public class Controller implements Initializable {
                 break;
 
         }
+        return endOfField;
     }
 
-    private  void moveHor(int direction){
-        for (int y = 0; y < figArray.length; y++) {
-            for (int x = 0; x < figArray[y].length; x++) {
+    private void placeNode(int y, int x,int newPosY,int newPosX){
+        Rectangle rectangle = new Rectangle(33,33,Color.BLACK);
+        GridPane.setRowIndex(rectangle, newPosY );
+        GridPane.setColumnIndex(rectangle, newPosX);
+        gamePane.getChildren().addAll(rectangle);
+        playfield[newPosY][newPosX] = rectangle;
+    }
+
+    private void clearPane(){
+        Node node = gamePane.getChildren().get(0);
+        gamePane.getChildren().clear();
+        gamePane.getChildren().add(0,node);
+    }
+
+    private void changePosition(int oldPosY,int oldPosX,int newPosY,int newPosX){
+        clearPane();
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 3; x++) {
                 if (figArray[y][x] != null) {
-                    GridPane.setColumnIndex(figArray[y][x],posX + x+direction);
+                    playfield[oldPosY + y][oldPosX + x] = null;
+                    placeNode(y, x, newPosY + y, newPosX + x);
                 }
             }
         }
     }
 
-    private void moveVer(int direction){
-        for (int y = 0; y < figArray.length; y++) {
-            for (int x = 0; x < figArray[y].length; x++) {
-                if (figArray[y][x] != null) {
-                    GridPane.setRowIndex(figArray[y][x], posY + y +direction);
-                }
-            }
-        }
-    }
+
 
     @FXML
     private void buttonAction(ActionEvent e) {
@@ -307,25 +265,113 @@ public class Controller implements Initializable {
         }
     }
 
-    protected Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
+    protected  boolean checkForCollision(int newRow, int newCol){
+        boolean collision = false;
+        Node[][]buffer = playfield;
+
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 3; x++) {
+                if(figArray[y][x]!=null) {
+                    buffer[posY+y][posX+x] = null;
+                }
             }
         }
-        return null;
-    }
-
-    protected int findNode(int _row,int _col){
-        for(int i=0;i<list.size();i++){
-         if(list.get(i).getRow()== _row && list.get(i).getColumn()==_col){
-             return i;
-         }
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 3; x++) {
+                if(figArray[y][x]!=null) {
+                    if (wallCollision(newCol + x)) {
+                        collision = true;
+                    } else if (objectCollision(buffer[newRow][newCol+x], newRow + y, newCol + x)) {
+                        newFig = true;
+                        collision = true;
+                    } else if(endOfField(newRow)){
+                        newFig = true;
+                        collision = true;
+                    }
+                    else collision = false;
+                }
+            }
         }
-        return -1;
+        return collision;
     }
 
-
-    public void run(){
+    protected boolean wallCollision(int _newCol){
+        if(_newCol>=maxC || _newCol<=0){
+            return true;
+        }
+        return false;
     }
+
+    protected boolean objectCollision(Node buffer,int _newCol, int _newRow){
+            if(buffer != null){
+                return true;
+            }
+            else return false;
+    }
+
+    protected  boolean endOfField(int _newRow){
+        if(_newRow<maxR){
+            return false;
+        }
+        else return true;
+    }
+
+    protected void createNewFigurine(){
+        randomizedFig();
+        posY = 0;
+        posX = 3;
+        for (int y = 0; y < figArray.length; y++) {
+            for (int x = 0; x < figArray[y].length; x++) {
+                if(figArray[y][x]!=null) {
+                    Rectangle rectangle = new Rectangle(33,33,Color.BLACK);
+                    GridPane.setRowIndex(rectangle, posY + y);
+                    GridPane.setColumnIndex(rectangle, posX + x);
+                    gamePane.getChildren().addAll(rectangle);
+                    playfield[posY+y][posX+x] = rectangle;
+                }
+            }
+        }
+    }
+
+    public int[][] randomizedFig(){
+        int[][] _figur;
+        int zufall=(int)Math.round(Math.random()*7);
+
+        switch (zufall){
+            case 0:
+                _figur = ISpielfigur;
+                break;
+            case 1:
+                _figur = OSpielfigur;
+                break;
+            case 2:
+                _figur = SSpielfigur;
+                break;
+            case 3:
+                _figur = TSpielfigur;
+                break;
+            case 4:
+                _figur = ZSpielfigur;
+                break;
+            case 5:
+                _figur = LSpielfigur;
+                break;
+            case 6:
+                _figur = JSpielfigur;
+                break;
+            default:
+                _figur = OSpielfigur;
+                break;
+        }
+
+        for (int y = 0; y < _figur.length; y++) {
+            for (int x = 0; x < _figur[0].length; x++) {
+                if (_figur[y][x] == 1) {
+                    figArray[y][x] = new Rectangle(33, 33, Color.BLACK);
+                }
+            }
+        }
+        return figur;
+    }
+
 }
