@@ -1,21 +1,19 @@
 package sample;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import javax.print.DocFlavor;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -50,7 +48,7 @@ public class Controller implements Initializable {
 
 
     protected int posY = 0;
-    protected int posX = 7;
+    protected int posX = 3;
 
     protected int[][]field=new int[21][10];
     protected Node[][] playfield = new Node[21][10];
@@ -66,7 +64,7 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        figur = randomizedFig();
+        figArray = randomizedFig();
 
         for (int y = 0; y < figur.length; y++) {
             for (int x = 0; x < figur[y].length; x++) {
@@ -217,7 +215,7 @@ public class Controller implements Initializable {
         return endOfField;
     }
 
-    private void placeNode(int y, int x,int newPosY,int newPosX){
+    private void placeNode(int newPosY,int newPosX){
         Rectangle rectangle = new Rectangle(33,33,Color.BLACK);
         GridPane.setRowIndex(rectangle, newPosY );
         GridPane.setColumnIndex(rectangle, newPosX);
@@ -231,13 +229,23 @@ public class Controller implements Initializable {
         gamePane.getChildren().add(0,node);
     }
 
+    private void rewritePane(){
+        for(int y=0;y<playfield.length;y++){
+            for(int x=0;x<playfield[0].length;x++){
+                if(playfield[y][x]!=null) placeNode(y,x);
+            }
+        }
+
+    }
+
     private void changePosition(int oldPosY,int oldPosX,int newPosY,int newPosX){
         clearPane();
+        rewritePane();
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 3; x++) {
                 if (figArray[y][x] != null) {
                     playfield[oldPosY + y][oldPosX + x] = null;
-                    placeNode(y, x, newPosY + y, newPosX + x);
+                    placeNode(newPosY + y, newPosX + x);
                 }
             }
         }
@@ -265,7 +273,7 @@ public class Controller implements Initializable {
         }
     }
 
-    protected  boolean checkForCollision(int newRow, int newCol){
+    protected  boolean checkForCollision(int newY, int newX){
         boolean collision = false;
         Node[][]buffer = playfield;
 
@@ -279,14 +287,15 @@ public class Controller implements Initializable {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 3; x++) {
                 if(figArray[y][x]!=null) {
-                    if (wallCollision(newCol + x)) {
+                    if (wallCollision(newX + x)) {
                         collision = true;
-                    } else if (objectCollision(buffer[newRow][newCol+x], newRow + y, newCol + x)) {
+                    }else if(endOfField(newY+y)){
+                            newFig = true;
+                            collision = true;
+                    }else if (objectCollision(buffer, newY + y, newX + x)) {
                         newFig = true;
                         collision = true;
-                    } else if(endOfField(newRow)){
-                        newFig = true;
-                        collision = true;
+                        break;
                     }
                     else collision = false;
                 }
@@ -296,45 +305,51 @@ public class Controller implements Initializable {
     }
 
     protected boolean wallCollision(int _newCol){
-        if(_newCol>=maxC || _newCol<=0){
+        if(_newCol>maxC || _newCol<=0){
             return true;
         }
         return false;
     }
 
-    protected boolean objectCollision(Node buffer,int _newCol, int _newRow){
-            if(buffer != null){
+    protected boolean objectCollision(Node[][] buffer,int _newRow, int _newCol){
+            if(buffer[_newRow][_newCol] != null){
                 return true;
             }
             else return false;
     }
 
     protected  boolean endOfField(int _newRow){
-        if(_newRow<maxR){
+        if(_newRow<=maxR){
             return false;
         }
         else return true;
     }
 
     protected void createNewFigurine(){
-        randomizedFig();
+        for (int y = 0; y < figArray.length; y++) {
+            for (int x = 0; x < figArray[y].length; x++) {
+                if(figArray[y][x]!=null) {
+                    Rectangle rectangle = new Rectangle(33,33,Color.BLACK);
+                    playfield[posY+y][posX+x] = rectangle;
+                    figArray[y][x]=null;
+                }
+            }
+        }
+        figArray=randomizedFig();
         posY = 0;
         posX = 3;
         for (int y = 0; y < figArray.length; y++) {
             for (int x = 0; x < figArray[y].length; x++) {
                 if(figArray[y][x]!=null) {
-                    Rectangle rectangle = new Rectangle(33,33,Color.BLACK);
-                    GridPane.setRowIndex(rectangle, posY + y);
-                    GridPane.setColumnIndex(rectangle, posX + x);
-                    gamePane.getChildren().addAll(rectangle);
-                    playfield[posY+y][posX+x] = rectangle;
+                    placeNode(posY+y,posX+x);
                 }
             }
         }
     }
 
-    public int[][] randomizedFig(){
+    public Rectangle[][] randomizedFig(){
         int[][] _figur;
+        Rectangle[][]rectFigur = new Rectangle[4][3];
         int zufall=(int)Math.round(Math.random()*7);
 
         switch (zufall){
@@ -367,11 +382,11 @@ public class Controller implements Initializable {
         for (int y = 0; y < _figur.length; y++) {
             for (int x = 0; x < _figur[0].length; x++) {
                 if (_figur[y][x] == 1) {
-                    figArray[y][x] = new Rectangle(33, 33, Color.BLACK);
+                    rectFigur[y][x] = new Rectangle(33, 33, Color.BLACK);
                 }
             }
         }
-        return figur;
+        return rectFigur;
     }
 
 }
